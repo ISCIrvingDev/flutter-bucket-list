@@ -16,13 +16,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.light(useMaterial3: true),
-      routes: {
-        "/": (context) => HomePage(title: 'Bucket List'),
-        "/add": (context) => AddPage(),
-      },
-      // home: const HomePage(title: 'Bucket List'),
+      // Named Routes
+      // routes: {
+      //   "/": (context) => HomePage(title: 'Bucket List'),
+      //   "/add": (context) => AddPage(),
+      // },
       // * Nota) Cuando se manejan rutas, no se indica el "home" sino el "initialRoute"
-      initialRoute: '/',
+      // initialRoute: '/',
+
+      // Material Page Routes
+      home: const HomePage(title: 'Bucket List'),
     );
   }
 }

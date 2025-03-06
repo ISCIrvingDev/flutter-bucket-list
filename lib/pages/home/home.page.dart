@@ -1,3 +1,4 @@
+import 'package:bucket_list/pages/add/add.page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -88,7 +89,18 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),
         onPressed: () {
-          Navigator.pushNamed(context, '/add');
+          // Named Routes
+          // Navigator.pushNamed(
+          //   context,
+          //   '/add',
+          //   arguments: {"prop1": 'Un valor', "prop2": 'Otro valor'},
+          // );
+
+          // Material Page Routes
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddPage()),
+          );
         },
         child: Icon(Icons.add),
       ),
