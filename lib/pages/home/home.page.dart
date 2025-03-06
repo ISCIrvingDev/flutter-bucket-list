@@ -85,6 +85,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+      floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
+        onPressed: () {
+          Navigator.pushNamed(context, '/add');
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
