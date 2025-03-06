@@ -65,11 +65,13 @@ class _HomePageState extends State<HomePage> {
                                 leading: CircleAvatar(
                                   radius: 25,
                                   backgroundImage: NetworkImage(
-                                    'https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png',
+                                    fetchedData[i]['img'] ?? '',
                                   ),
                                 ),
-                                title: Text('Hey'),
-                                trailing: Text('Bye'),
+                                title: Text(fetchedData[i]['item'] ?? ''),
+                                trailing: Text(
+                                  fetchedData[i]['cost'].toString(),
+                                ),
                               ),
                             ),
                       ),
