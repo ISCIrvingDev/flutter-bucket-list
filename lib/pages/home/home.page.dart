@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,7 +10,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void getData() {}
+  List<dynamic> fetchedData = [];
+  bool isLoading = false;
+
+  Future<void> getData() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      var res = await Dio().get(
+        'https://bucket-list-c967f-default-rtdb.firebaseio.com/bucketlist.json',
+      );
+
+      print(res.statusCode);
+      print(res.data);
+
+      fetchedData = res.data;
+    } catch (e) {
+      print('Se suscito un error: $e');
+    } finally {
+      setState(() => isLoading = false);
+    }
+  }
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +48,41 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: ElevatedButton(onPressed: getData, child: Text('Get Data')),
-      ),
+      body:
+          isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                children: [
+                  Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: () => getData(),
+                      child: ListView.builder(
+                        itemCount: fetchedData.length,
+                        itemBuilder:
+                            (BuildContext context, int i) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage: NetworkImage(
+                                    'https://cdn-images-1.medium.com/max/1200/1*5-aoK8IBmXve5whBQM90GA.png',
+                                  ),
+                                ),
+                                title: Text('Hey'),
+                                trailing: Text('Bye'),
+                              ),
+                            ),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: getData,
+                      child: Text('Get Data'),
+                    ),
+                  ),
+                ],
+              ),
     );
   }
 }
