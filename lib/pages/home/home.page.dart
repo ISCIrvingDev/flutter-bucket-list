@@ -1,4 +1,5 @@
 import 'package:bucket_list/pages/add/add.page.dart';
+import 'package:bucket_list/pages/details/details.page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -63,6 +64,26 @@ class _HomePageState extends State<HomePage> {
                             (BuildContext context, int i) => Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ListTile(
+                                onTap: () {
+                                  // Named Routes
+                                  // Navigator.pushNamed(
+                                  //   context,
+                                  //   '/details',
+                                  //   arguments: {"title": fetchedData[i]['item'] ?? '', "img": fetchedData[i]['img'] ?? ''},
+                                  // );
+
+                                  // Material Page Routes
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => DetailsPage(
+                                            title: fetchedData[i]['item'] ?? '',
+                                            img: fetchedData[i]['img'] ?? '',
+                                          ),
+                                    ),
+                                  );
+                                },
                                 leading: CircleAvatar(
                                   radius: 25,
                                   backgroundImage: NetworkImage(
