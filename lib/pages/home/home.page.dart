@@ -26,16 +26,12 @@ class _HomePageState extends State<HomePage> {
         'https://bucket-list-c967f-default-rtdb.firebaseio.com/bucketlist.json',
       );
 
-      print(res.statusCode);
-      print(res.data);
-
       isError = false;
 
       if (res.data is List) {
         fetchedData = res.data;
       }
     } catch (e) {
-      print('Se suscito un error: $e');
       isError = true;
     } finally {
       setState(() => isLoading = false);
