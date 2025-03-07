@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<dynamic> fetchedData = [];
   bool isLoading = false;
+  bool isError = false;
 
   Future<void> getData() async {
     setState(() {
@@ -28,9 +29,14 @@ class _HomePageState extends State<HomePage> {
       print(res.statusCode);
       print(res.data);
 
-      fetchedData = res.data;
+      isError = false;
+
+      if (res.data is List) {
+        fetchedData = res.data;
+      }
     } catch (e) {
       print('Se suscito un error: $e');
+      isError = true;
     } finally {
       setState(() => isLoading = false);
     }
@@ -53,6 +59,27 @@ class _HomePageState extends State<HomePage> {
       body:
           isLoading
               ? Center(child: CircularProgressIndicator())
+              : isError
+              ? Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.warning),
+                      SizedBox(width: 20),
+                      Text('Cannot connoect to the server'),
+                    ],
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: getData,
+                      child: Text('Get Data'),
+                    ),
+                  ),
+                ],
+              )
+              : fetchedData.length < 1
+              ? Center(child: Text('No data in the bucket list'))
               : Column(
                 children: [
                   Expanded(
