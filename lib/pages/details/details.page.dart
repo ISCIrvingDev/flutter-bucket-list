@@ -13,7 +13,37 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text(widget.title)),
+      appBar: AppBar(
+        actions: [
+          PopupMenuButton(
+            onSelected: (val) {
+              if (val == 0) {
+                showDialog(
+                  context: context,
+                  builder:
+                      (builder) => AlertDialog(
+                        title: Text('Do you wanto to delete it?'),
+                        actions: [
+                          InkWell(
+                            onTap: () => Navigator.pop(context),
+                            child: Text('Cancel'),
+                          ),
+                          Text('Confirm'),
+                        ],
+                      ),
+                );
+              }
+            },
+            itemBuilder:
+                (BuildContext context) => [
+                  PopupMenuItem(value: 0, child: Text('Delete')),
+                  PopupMenuItem(value: 1, child: Text('Mark as Done')),
+                ],
+          ),
+        ],
+        centerTitle: true,
+        title: Text(widget.title),
+      ),
       body: Column(
         children: [
           Container(
