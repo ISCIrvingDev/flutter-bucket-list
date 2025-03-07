@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               )
-              : fetchedData.length < 1
+              : fetchedData.isEmpty
               ? Center(child: Text('No data in the bucket list'))
               : Column(
                 children: [
